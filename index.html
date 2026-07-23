@@ -115,8 +115,14 @@ h1,h2,h3{
 }
 .nav-links a:hover{color:var(--yellow);}
 .nav .btn{padding:10px 20px; font-size:0.9rem;}
-.nav-links-mobile-hide{display:flex;}
-@media(max-width:760px){ .nav-links-mobile-hide{display:none;} }
+.nav-links-mobile-hide{display:contents;}
+@media(max-width:760px){
+  .nav-links-mobile-hide{display:none;}
+  .nav-inner{padding:12px 16px;}
+  .nav-logo{font-size:1.15rem;}
+  .nav-logo span{font-size:0.55rem;}
+  .nav .btn{padding:9px 16px; font-size:0.82rem;}
+}
 
 /* ===== HERO ===== */
 .hero{
@@ -171,6 +177,7 @@ h1,h2,h3{
   margin:22px 0 36px;
 }
 .hero-cta{display:flex; gap:16px; flex-wrap:wrap; margin-bottom:44px;}
+@media(max-width:600px){ .hero-cta .btn{width:100%; text-align:center;} }
 .hero-badge{
   position:absolute; top:28px; right:24px; z-index:3;
   display:flex; align-items:center; gap:10px;
@@ -227,6 +234,7 @@ h1,h2,h3{
 
 /* ===== SECTION GENERIC ===== */
 section{padding:96px 0;}
+@media(max-width:760px){ section{padding:64px 0;} }
 .section-head{max-width:640px; margin-bottom:52px;}
 .section-head h2{font-size:clamp(2.2rem,5vw,3.4rem); margin-top:8px;}
 .section-head p{color:var(--muted); font-size:1.08rem; margin-top:14px;}
@@ -398,6 +406,7 @@ section{padding:96px 0;}
 .helper-list li::before{content:"→"; position:absolute; left:0; color:var(--yellow);}
 .wizard-nav{display:flex; justify-content:space-between; gap:12px; margin-top:8px;}
 .wizard-nav .btn{flex:1;}
+@media(max-width:380px){ .wizard-nav .btn{padding:14px 12px; font-size:0.92rem;} }
 
 /* review */
 .review-list{list-style:none; margin-bottom:24px;}
@@ -418,6 +427,10 @@ section{padding:96px 0;}
   padding-top:2px;
 }
 .review-item-value{text-align:right; font-size:0.95rem; white-space:pre-wrap; max-width:70%;}
+@media(max-width:480px){
+  .review-item{flex-direction:column; gap:6px;}
+  .review-item-value{text-align:left; max-width:100%;}
+}
 .review-edit{
   background:none; border:none; color:var(--yellow); font-size:0.8rem; text-decoration:underline;
   cursor:pointer; font-family:'Inter',sans-serif; margin-top:4px; padding:0;
@@ -439,12 +452,17 @@ section{padding:96px 0;}
   padding:30px 24px;
   flex-wrap:wrap;
 }
-.cta-band-left{display:flex; align-items:center; gap:16px;}
-.cta-band-left svg{width:38px; height:38px;}
-.cta-band-left strong{display:block; font-family:'Anton',sans-serif; font-size:1.7rem; letter-spacing:0.01em;}
-.cta-band-left span{font-family:'Barlow Condensed',sans-serif; font-weight:600; text-transform:uppercase; letter-spacing:0.08em; font-size:0.85rem;}
+.cta-band-center{justify-content:center; text-align:center; flex-direction:column; padding:44px 24px;}
+.cta-band-copy strong{display:block; font-family:'Anton',sans-serif; font-size:2rem; letter-spacing:0.01em; text-transform:uppercase;}
+.cta-band-copy span{font-family:'Barlow Condensed',sans-serif; font-weight:600; text-transform:uppercase; letter-spacing:0.08em; font-size:0.9rem; opacity:0.85;}
 .cta-band .btn{background:#04170a; color:var(--green); box-shadow:none;}
 .cta-band .btn:hover{background:#08260f;}
+.cta-band .btn-lg{font-size:1.25rem; padding:20px 48px;}
+@media(max-width:600px){
+  .cta-band-center{padding:36px 20px;}
+  .cta-band-copy strong{font-size:1.5rem;}
+  .cta-band .btn-lg{font-size:1.05rem; padding:16px 32px; width:100%;}
+}
 
 footer{background:var(--ink); padding:44px 0 30px;}
 .footer-inner{display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:16px;}
@@ -472,11 +490,13 @@ footer{background:var(--ink); padding:44px 0 30px;}
 <nav class="nav">
   <div class="nav-inner">
     <div class="nav-logo">Valdo Fretes<span>Fretes · Mudanças · Cargas</span></div>
-    <div class="nav-links nav-links-mobile-hide">
-      <a href="#servicos">Serviços</a>
-      <a href="#bau">O baú</a>
-      <a href="#galeria">Galeria</a>
-      <a href="#agendar" class="btn btn-yellow">Agendar frete</a>
+    <div class="nav-links">
+      <span class="nav-links-mobile-hide">
+        <a href="#servicos">Serviços</a>
+        <a href="#bau">O baú</a>
+        <a href="#galeria">Galeria</a>
+      </span>
+      <a href="#agendar" class="btn btn-yellow nav-cta">Agendar frete</a>
     </div>
   </div>
 </nav>
@@ -494,10 +514,6 @@ footer{background:var(--ink); padding:44px 0 30px;}
     <p class="hero-sub">Frete e mudança na Região Metropolitana do Recife e interior, com o mesmo caminhão, o mesmo motorista e o mesmo cuidado de sempre. Você conta o que precisa levar, a gente confirma se dá certo — sem enrolação.</p>
     <div class="hero-cta">
       <a href="#agendar" class="btn btn-yellow">Agendar frete</a>
-      <a href="https://wa.me/5581984527290" target="_blank" rel="noopener" class="btn btn-outline">
-        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12.001 2C6.478 2 2 6.477 2 12c0 1.892.526 3.66 1.437 5.168L2 22l4.963-1.406A9.953 9.953 0 0 0 12.001 22C17.524 22 22 17.523 22 12S17.524 2 12.001 2zm0 18.09a8.075 8.075 0 0 1-4.363-1.277l-.313-.186-3.15.893.906-3.06-.204-.322A8.073 8.073 0 0 1 3.91 12c0-4.465 3.626-8.09 8.09-8.09 4.465 0 8.09 3.625 8.09 8.09 0 4.464-3.625 8.09-8.09 8.09z"/></svg>
-        Chamar no WhatsApp
-      </a>
     </div>
   </div>
 </header>
@@ -545,7 +561,7 @@ footer{background:var(--ink); padding:44px 0 30px;}
           <line x1="34" y1="90" x2="34" y2="220" stroke="#9a9a9e" stroke-width="1.5"/>
           <line x1="26" y1="90" x2="42" y2="90" stroke="#9a9a9e" stroke-width="1.5"/>
           <line x1="26" y1="220" x2="42" y2="220" stroke="#9a9a9e" stroke-width="1.5"/>
-          <text x="10" y="158" fill="#f2f1ec" font-family="Barlow Condensed, sans-serif" font-size="18" font-weight="700" text-anchor="middle" transform="rotate(-90 10,158)">1,7 M ALTURA</text>
+          <text x="18" y="158" fill="#f2f1ec" font-family="Barlow Condensed, sans-serif" font-size="18" font-weight="700" text-anchor="middle" transform="rotate(-90 18,158)">1,7 M ALTURA</text>
           <!-- largura dimension (top right diagonal) -->
           <text x="405" y="118" fill="#f2f1ec" font-family="Barlow Condensed, sans-serif" font-size="18" font-weight="700" text-anchor="middle" transform="rotate(90 405,118)">1,6 M LARGURA</text>
           <line x1="300" y1="90" x2="360" y2="50" stroke="#f6c51b" stroke-width="0" />
@@ -735,15 +751,12 @@ footer{background:var(--ink); padding:44px 0 30px;}
 </section>
 
 <div class="cta-band">
-  <div class="wrap">
-    <div class="cta-band-left">
-      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12.001 2C6.478 2 2 6.477 2 12c0 1.892.526 3.66 1.437 5.168L2 22l4.963-1.406A9.953 9.953 0 0 0 12.001 22C17.524 22 22 17.523 22 12S17.524 2 12.001 2zm0 18.09a8.075 8.075 0 0 1-4.363-1.277l-.313-.186-3.15.893.906-3.06-.204-.322A8.073 8.073 0 0 1 3.91 12c0-4.465 3.626-8.09 8.09-8.09 4.465 0 8.09 3.625 8.09 8.09 0 4.464-3.625 8.09-8.09 8.09z"/></svg>
-      <div>
-        <strong>(81) 98452-7290</strong>
-        <span>Chame no WhatsApp!</span>
-      </div>
+  <div class="wrap cta-band-center">
+    <div class="cta-band-copy">
+      <strong>Pronto pra agendar seu frete?</strong>
+      <span>Leva menos de 2 minutos</span>
     </div>
-    <a href="https://wa.me/5581984527290" target="_blank" rel="noopener" class="btn">Falar agora</a>
+    <a href="#agendar" class="btn btn-lg">Agendar frete</a>
   </div>
 </div>
 
