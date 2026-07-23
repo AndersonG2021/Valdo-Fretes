@@ -791,14 +791,16 @@ footer{background:var(--ink); padding:44px 0 30px;}
     });
   }
 
-  function showStep(n){
+  function showStep(n, shouldScroll){
     steps.forEach(s=>{
       s.hidden = parseInt(s.dataset.step,10) !== n;
     });
     current = n;
     updateStepper();
-    const card = document.querySelector('.wizard-card');
-    if(card) card.scrollIntoView({behavior:'smooth', block:'start'});
+    if(shouldScroll){
+      const card = document.querySelector('.wizard-card');
+      if(card) card.scrollIntoView({behavior:'smooth', block:'start'});
+    }
   }
 
   function validateStep(n){
@@ -830,11 +832,11 @@ footer{background:var(--ink); padding:44px 0 30px;}
     btn.addEventListener('click', ()=>{
       if(!validateStep(current)) return;
       if(current === 4){ buildReview(); }
-      showStep(current+1);
+      showStep(current+1, true);
     });
   });
   document.querySelectorAll('[data-prev]').forEach(btn=>{
-    btn.addEventListener('click', ()=> showStep(current-1));
+    btn.addEventListener('click', ()=> showStep(current-1, true));
   });
 
   function buildReview(){
@@ -865,7 +867,7 @@ footer{background:var(--ink); padding:44px 0 30px;}
       list.appendChild(li);
     });
     list.querySelectorAll('[data-goto]').forEach(b=>{
-      b.addEventListener('click', ()=> showStep(parseInt(b.dataset.goto,10)));
+      b.addEventListener('click', ()=> showStep(parseInt(b.dataset.goto,10), true));
     });
   }
 
@@ -901,16 +903,16 @@ footer{background:var(--ink); padding:44px 0 30px;}
     const text = encodeURIComponent(msgLines.join('\n'));
     const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${text}`;
     window.open(url, '_blank', 'noopener');
-    showStep(6);
+    showStep(6, true);
   });
 
   document.getElementById('restartBtn').addEventListener('click', ()=>{
     document.getElementById('wizardForm').reset();
     document.querySelectorAll('.field').forEach(f=>f.classList.remove('invalid'));
-    showStep(1);
+    showStep(1, true);
   });
 
-  showStep(1);
+  showStep(1, false);
 
   // scroll reveal
   const revealEls = document.querySelectorAll('.reveal');
